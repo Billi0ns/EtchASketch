@@ -1,6 +1,6 @@
 const buttons = document.querySelector('#buttons');
 const container = document.querySelector('#container');
-document.querySelector('body').style.backgroundColor = '#8ca0ff'
+container.style.border = 'solid 2px #CDCDCD'
 
 // Create three buttons 
 let blackBtn = document.createElement('button');
@@ -65,24 +65,24 @@ function clearGrids() {
   }
 }
 
-// Create 256 divs
+// Create divs for the grids
 let num = 16;
 function createGrids(num) {
   for (let i = 0; i < num*num; i++){
     let div = document.createElement('div');
     container.appendChild(div);
-    div.style.border = 'solid 1px #3c2d12';
+    div.style.border = 'solid 1px #CDCDCD';
   }
 }
 
 let blackMode = true;
-// Create a 16 * 16 grid
+// Create a grid
 function styleGrids(num) {
   container.style.margin = '0 auto';
-  container.style.width = '47%';
+  container.style.width = '50%';
   container.style.display = 'grid';
 
-  let gridLength = `${600 / num}px`;
+  let gridLength = `${632 / num}px`;
   container.style.grid = `repeat(${num}, ${gridLength}) / auto-flow ${gridLength}`;
 
   // Set attribues to all cells in the grid
@@ -98,7 +98,7 @@ function changeColor(blackMode) {
   if (blackMode) {
     for (let i = 0; i < divs.length; i++) {
       divs[i].style.backgroundColor = 'white';
-      divs[i].addEventListener('mouseover',(e) => e.target.style.backgroundColor = 'black');
+      divs[i].addEventListener('mouseover',(e) => moreBlack(e));
     }
   } else {
     for (let i = 0; i < divs.length; i++) {
@@ -106,7 +106,15 @@ function changeColor(blackMode) {
       divs[i].addEventListener('mouseover',(e) => e.target.style.backgroundColor = `rgb(${getRandomInt(255)},${getRandomInt(255)},${getRandomInt(255)}`);
     }
   }
-  
+}
+
+function moreBlack(e) {
+  if (e.target.style.backgroundColor === 'white') {
+    e.target.blackAlpha = 0.1;
+  } else {
+    e.target.blackAlpha += 0.1;
+  }
+  e.target.style.backgroundColor = `rgba(0,0,0,${e.target.blackAlpha})`;
 }
 
 createGrids(num);
